@@ -7,11 +7,14 @@ import sys
 
 class Counter:
     start = 0
+    led = mraa.Gpio(3)
+    led.dir(mraa.DIR_OUT)
 
 c = Counter()
 
 # GPIO
 pin = 5;
+led = 3
 
 def isr_routine(gpio):
     if not gpio.read():
@@ -21,6 +24,8 @@ def isr_routine(gpio):
                 past = time.time() - c.start
                 if past >= 2:
                     print('attivato!')
+                    c.led.write(not c.led.read())
+                    #a_led.write(not a_led.value())
                     break
                 else:
                     time.sleep(0.1)
@@ -32,6 +37,7 @@ if __name__=='__main__':
     if os.getuid():
         print('Please execute as root')
         sys.exit(1)
+
     try:
         # initialise GPIO
         x = mraa.Gpio(pin)
