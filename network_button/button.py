@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
+import os
 import mraa
 import time
 import sys
 
 class Counter:
     start = 0
-    end = 0
 
 c = Counter()
 
@@ -28,19 +28,23 @@ def isr_routine(gpio):
                 print('sollevato')
                 break
 
-try:
-    # initialise GPIO
-    x = mraa.Gpio(pin)
+if __name__=='__main__':
+    if os.getuid():
+        print('Please execute as root')
+        sys.exit(1)
+    try:
+        # initialise GPIO
+        x = mraa.Gpio(pin)
 
-    print("Starting ISR for pin " + repr(pin))
+        print("Starting ISR for pin " + repr(pin))
 
-    # set direction and edge types for interrupt
-    x.dir(mraa.DIR_IN)
-    x.isr(mraa.EDGE_BOTH, isr_routine, x)
+        # set direction and edge types for interrupt
+        x.dir(mraa.DIR_IN)
+        x.isr(mraa.EDGE_BOTH, isr_routine, x)
 
-    # wait until ENTER is pressed
-    var = input("Press ENTER to stop")
-    x.isrExit()
-except ValueError as e:
-    print(e)
+        # wait until ENTER is pressed
+        var = input("Press ENTER to stop")
+        x.isrExit()
+    except ValueError as e:
+        print(e)
 
