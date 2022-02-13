@@ -1,0 +1,15 @@
+[Unit]
+Description=wifi button service
+#After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=oneshot
+#Restart=always
+#RestartSec=1
+User=root
+WorkingDirectory=/home/rock/Documents/leminrock/hardware/network_button
+ExecStart=/home/rock/Documents/leminrock/hardware/network_button/button.py 
+
+[Install]
+WantedBy=multi-user.target

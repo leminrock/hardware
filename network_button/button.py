@@ -4,6 +4,11 @@ import os
 import mraa
 import time
 import sys
+import subprocess as sp
+
+
+SYSTEMD_LED_WIFI = "systemctl restart led_wifi.service" 
+LED_WIFI_PATH = "/home/rock/Documents/leminrock/hardware/network_button/.config_led_wifi"
 
 class Counter:
     start = 0
@@ -16,6 +21,7 @@ c = Counter()
 pin = 5;
 led = 3
 
+
 def isr_routine(gpio):
     if not gpio.read():
         c.start = time.time()
@@ -24,8 +30,11 @@ def isr_routine(gpio):
                 past = time.time() - c.start
                 if past >= 2:
                     print('attivato!')
-                    c.led.write(not c.led.read())
+                    #c.led.write(not c.led.read())
                     #a_led.write(not a_led.value())
+                    with open(LED_WIFI_PATH, 'w') as f:
+                        f.write(("ARG=off"))
+                    sp.run(SYSTEMD_LED_WIFI.split(' '))
                     break
                 else:
                     time.sleep(0.1)
@@ -49,7 +58,9 @@ if __name__=='__main__':
         x.isr(mraa.EDGE_BOTH, isr_routine, x)
 
         # wait until ENTER is pressed
-        var = input("Press ENTER to stop")
+        #var = input("Press ENTER to stop")
+        while True:
+            pass
         x.isrExit()
     except ValueError as e:
         print(e)
