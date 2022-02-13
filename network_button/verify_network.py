@@ -22,5 +22,6 @@ if __name__ == '__main__':
         print("you must to be root")
         sys.exit(1)
 
-    print("wifi:", verify_wifi())
-    print("hotspot:", verify_hotspot())
+    print(f"wifi:\t\t{verify_wifi()}")
+    print(f"hotspot:\t{verify_hotspot()}")
+    sys.exit(1)
