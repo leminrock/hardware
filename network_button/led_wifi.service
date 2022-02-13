@@ -8,9 +8,9 @@ Type=oneshot
 #Restart=always
 #RestartSec=1
 User=root
-EnvironmentFile=/home/odisseo/Documenti/leminrock/hardware/network_button/.config_led_wifi
-WorkingDirectory=/home/odisseo/Documenti/leminrock/hardware/network_button
-ExecStart=/home/odisseo/Documenti/leminrock/hardware/network_button/led_status.py $ARG &
+EnvironmentFile=/home/rock/Documents/leminrock/hardware/network_button/.config_led_wifi
+WorkingDirectory=/home/rock/Documents/leminrock/hardware/network_button
+ExecStart=/home/rock/Documents/leminrock/hardware/network_button/led_status.py $ARG &
 
 [Install]
 WantedBy=multi-user.target
