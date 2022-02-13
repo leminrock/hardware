@@ -9,8 +9,8 @@ ROOT_PERMISSION = "YOU MUST TO BE ROOT TO RUN THIS FILE"
 ARGUMENT_MISSING = "BLINKTYPE ARGUMENT MISSING"
 POSSIBLE_ARGUMENTS = "PLEASE CHOOSE ARGUMENT IN\non | off | fast | slow"
 PIN = 3
-FAST_DELAY = 0.2
-SLOW_DELAY = 0.75
+FAST_DELAY = 0.1
+SLOW_DELAY = 0.5
 
 
 def led_config(pin):
@@ -44,7 +44,7 @@ def led_slow_blink(led):
 
 
 STATES = {
-    "on": led_fixed,
+    "on": led_on,
     "off": led_off,
     "fast": led_fast_blink,
     "slow": led_slow_blink
@@ -59,8 +59,10 @@ if __name__ == '__main__':
         sys.exit(1)
     else:
         blink = sys.argv[1]
+    
+    led = led_config(PIN)
 
     try:
-        STATES[blink]()
+        STATES[blink](led)
     except KeyError:
         print(POSSIBLE_ARGUMENTS)
