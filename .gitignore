@@ -1,9 +1,8 @@
-logger.txt
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+logger.txt
 
 # C extensions
 *.so
