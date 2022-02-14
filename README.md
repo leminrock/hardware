@@ -1,3 +1,3 @@
 # hardware
 
-buttons, leds, and other hardware stuff... and then?
+buttons, leds, and other hardware stuff...

@@ -5,7 +5,7 @@ from datetime import datetime
 path = './logger.txt'
 
 with open(path, 'a') as logger:
-    loffer.write(f"{datetime.now()} committed!\n")
+    logger.write(f"{datetime.now()} committed!\n")
 
 
 
