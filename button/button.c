@@ -5,12 +5,15 @@
 /* mraa header */
 #include "mraa/gpio.h"
 
-#define GPIO_PIN 5
+#define GPIO_PIN 3
+
+int counter = 0;
 
 void int_handler(void* args)
 {
-    fprintf(stdout, "ISR triggered\n");
-    sleep(0.1);
+    //fprintf(stdout, "ISR triggered\n\n");
+    printf("RELEASED %d \n", counter);
+    counter++;
 }
 
 int main()
@@ -34,6 +37,11 @@ int main()
     status = mraa_gpio_dir(gpio, MRAA_GPIO_IN);
     if (status != MRAA_SUCCESS) {
         goto err_exit;
+    }
+
+    status = mraa_gpio_edge_mode(gpio, MRAA_GPIO_ACTIVE_LOW);
+    if (status != MRAA_SUCCESS) {
+    	goto err_exit;
     }
 
     /* configure ISR for GPIO */
