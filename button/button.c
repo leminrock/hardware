@@ -7,10 +7,10 @@
 
 #define GPIO_PIN 5
 
-void
-int_handler(void* args)
+void int_handler(void* args)
 {
     fprintf(stdout, "ISR triggered\n");
+    sleep(0.1);
 }
 
 int main()
