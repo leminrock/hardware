@@ -5,7 +5,7 @@
 /* mraa header */
 #include "mraa/gpio.h"
 
-#define GPIO_PIN 6
+#define GPIO_PIN 5
 
 void
 int_handler(void* args)
@@ -13,8 +13,7 @@ int_handler(void* args)
     fprintf(stdout, "ISR triggered\n");
 }
 
-int
-main()
+int main()
 {
     mraa_result_t status = MRAA_SUCCESS;
     mraa_gpio_context gpio;
