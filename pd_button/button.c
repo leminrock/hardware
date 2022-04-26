@@ -16,16 +16,15 @@ void int_handler(void* args);
 typedef struct _button {
     t_object x_obj;
     volatile sig_atomic_t flag;
-    t_int state;
     mraa_result_t status;
     mraa_gpio_context gpio_1;
     int counter;
 } t_button;
 
-void int_handler(void* args)
+void int_handler(t_button* x)
 {
     // fprintf(stdout, "ISR triggered\n\n");
-    t_button *x = (t_button *)args;
+    // t_button* x = (t_button*)args;
     x->counter++;
 
     post("bang %d", x->counter);
@@ -54,24 +53,10 @@ void button_free(t_button* x)
     mraa_deinit();
 }
 
-/*
-void button_bang(t_button* x)
-{
-    //(void)x; // silence unused variable warning
-    x->state = 1 - x->state;
-    x->status = mraa_gpio_write(x->gpio_1, x->state);
-    if (x->state == 1)
-        post("ACCESA");
-    else
-        post("SPENTA");
-}
-*/
-
 void* button_new(void)
 {
     t_button* x = (t_button*)pd_new(button_class);
     x->flag = 1;
-    x->state = 0;
 
     x->status = MRAA_SUCCESS;
 
@@ -98,7 +83,7 @@ void* button_new(void)
         post("RIGHT DIRECTION");
 
     x->status
-        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, (void *)x);
+        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, (t_button*)x);
     if (x->status != MRAA_SUCCESS)
         post("WRONG ISR BINDING");
 
