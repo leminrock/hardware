@@ -31,6 +31,7 @@ void int_handler(void* args)
 {
     t_button* x = (t_button*)args;
 
+    /*
     clock_t t = clock();
 
     if ((t - x->start_t) > DEBOUNCE) {
@@ -38,7 +39,12 @@ void int_handler(void* args)
         post("pin value: %d,\tcounter: %d,\tpin_number: %d", mraa_gpio_read(x->gpio_1), x->counter, x->pin);
         x->start_t = t;
     }
-    // sleep(0.1);
+    */
+    int value = mraa_gpio_read(x->gpio_1);
+    if (value)
+        print("PRESSED");
+    else
+        print("RELEASED");
 }
 
 /* gestisce l'uscita */
@@ -93,7 +99,7 @@ void* button_new(t_floatarg f)
         post("RIGHT DIRECTION");
 
     x->status
-        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_FALLING, &int_handler, (t_button*)x);
+        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_BOTH, &int_handler, (t_button*)x);
     if (x->status != MRAA_SUCCESS)
         post("WRONG ISR BINDING");
 
