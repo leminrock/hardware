@@ -81,9 +81,20 @@ void* button_new(void)
     /* initialize GPIO pin */
     x->gpio_1 = mraa_gpio_init(GPIO_PIN_1);
 
+    if (x->gpio_1 == NULL) {
+        post("Failed to initialize GPIO %d", GPIO_PIN_1);
+        mraa_deinit();
+    }
+
     /* set GPIO to output */
     x->status = mraa_gpio_dir(x->gpio_1, MRAA_GPIO_IN);
-    x->status = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, NULL);
+    if (x->status != MRAA_SUCCESS)
+        post("ERROR ON SETTING DIRECTION");
+    else
+        post("RIGHT DIRECTION");
+
+    x->status
+        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, NULL);
     if (x->status != MRAA_SUCCESS)
         post("WRONG ISR BINDING");
 
