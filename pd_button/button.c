@@ -106,7 +106,7 @@ void* button_new(t_floatarg f)
     x->counter = 0;
     x->start_t = clock();
     x->pin = (int)f;
-    x->old_value = 0;
+    x->old_value = -1;
     post("PIN NUMBER IS %d", x->pin);
     post("object correctly initialized...");
     post("cleck per secs %ld", CLOCKS_PER_SEC);
