@@ -11,10 +11,10 @@ int counter = 0;
 
 void int_handler(void* args)
 {
-    //fprintf(stdout, "ISR triggered\n\n");
+    // fprintf(stdout, "ISR triggered\n\n");
     printf("RELEASED %d \n", counter);
     counter++;
-    //sleep(0.1);
+    // sleep(0.1);
 }
 
 int main()
@@ -40,10 +40,10 @@ int main()
         goto err_exit;
     }
 
-    //status = mraa_gpio_input_mode(gpio, MRAA_GPIO_ACTIVE_LOW);
-    //if (status != MRAA_SUCCESS) {
+    // status = mraa_gpio_input_mode(gpio, MRAA_GPIO_ACTIVE_LOW);
+    // if (status != MRAA_SUCCESS) {
     //	goto err_exit;
-    //}
+    // }
 
     /* configure ISR for GPIO */
     status = mraa_gpio_isr(gpio, MRAA_GPIO_EDGE_RISING, &int_handler, NULL);
@@ -52,7 +52,9 @@ int main()
     }
 
     /* wait 30 seconds isr trigger */
-    sleep(30);
+    while (1) {
+        ;
+    }
 
     /* close GPIO */
     mraa_gpio_close(gpio);
