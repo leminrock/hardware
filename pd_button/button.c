@@ -78,10 +78,10 @@ void* button_new(t_floatarg f)
 
     //! [Interesting]
     /* initialize GPIO pin */
-    x->gpio_1 = mraa_gpio_init(GPIO_PIN_1);
+    x->gpio_1 = mraa_gpio_init(int(f));
 
     if (x->gpio_1 == NULL) {
-        post("Failed to initialize GPIO %d", GPIO_PIN_1);
+        post("Failed to initialize GPIO %d", (int)f);
         mraa_deinit();
     }
 
