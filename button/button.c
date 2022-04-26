@@ -5,7 +5,7 @@
 /* mraa header */
 #include "mraa/gpio.h"
 
-#define GPIO_PIN 19
+#define GPIO_PIN 8
 
 int counter = 0;
 
@@ -14,7 +14,7 @@ void int_handler(void* args)
     //fprintf(stdout, "ISR triggered\n\n");
     printf("RELEASED %d \n", counter);
     counter++;
-    sleep(0.1);
+    //sleep(0.1);
 }
 
 int main()

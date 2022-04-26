@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import mraa
 import time
 import sys
@@ -14,12 +16,13 @@ c = Counter()
 
 
 def isr_routine(gpio):
-    print("pin " + repr(gpio.getPin(True)) + " = " + repr(gpio.read()))
+    #print("pin " + repr(gpio.getPin(True)) + " = " + repr(gpio.read()))
+    print(c.count)
     c.count += 1
 
 
 # GPIO
-pin = 19
+pin = 42
 
 try:
     # initialise GPIO
@@ -29,7 +32,7 @@ try:
 
     # set direction and edge types for interrupt
     x.dir(mraa.DIR_IN)
-    x.isr(mraa.EDGE_BOTH, isr_routine, x)
+    x.isr(mraa.EDGE_RISING, isr_routine, x)
 
     # wait until ENTER is pressed
     var = input("Press ENTER to stop")
