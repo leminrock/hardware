@@ -11,7 +11,6 @@
 #define GPIO_PIN_1 8
 
 static t_class* button_class;
-void int_handler(void* args);
 
 typedef struct _button {
     t_object x_obj;
@@ -21,10 +20,12 @@ typedef struct _button {
     int counter;
 } t_button;
 
-void int_handler(t_button* x)
+void int_handler(void* args);
+
+void int_handler(void* args)
 {
     // fprintf(stdout, "ISR triggered\n\n");
-    // t_button* x = (t_button*)args;
+    t_button* x = (t_button*)args;
     x->counter++;
 
     post("bang %d", x->counter);
