@@ -1,5 +1,6 @@
 /* standard headers */
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 
 /* mraa header */
@@ -8,19 +9,24 @@
 #define GPIO_PIN 8
 
 int counter = 0;
+clock_t start_timer;
 
 void int_handler(void* args)
 {
     // fprintf(stdout, "ISR triggered\n\n");
-    printf("RELEASED %d \n", counter);
-    counter++;
+    // printf("RELEASED %d \n", counter);
+    // counter++;
     // sleep(0.1);
+    mraa_gpio_context g = (mraa_gpio_context*)args;
+    int value = mraa_gpio_read(g);
+    printf("value: %d", value);
 }
 
 int main()
 {
     mraa_result_t status = MRAA_SUCCESS;
     mraa_gpio_context gpio;
+    start_timer = clock();
 
     /* initialize mraa for the platform (not needed most of the times) */
     mraa_init();
@@ -28,6 +34,7 @@ int main()
     //! [Interesting]
     /* initialize GPIO pin */
     gpio = mraa_gpio_init(GPIO_PIN);
+
     if (gpio == NULL) {
         fprintf(stderr, "Failed to initialize GPIO %d\n", GPIO_PIN);
         mraa_deinit();
@@ -46,12 +53,11 @@ int main()
     // }
 
     /* configure ISR for GPIO */
-    status = mraa_gpio_isr(gpio, MRAA_GPIO_EDGE_RISING, &int_handler, NULL);
+    status = mraa_gpio_isr(gpio, MRAA_GPIO_EDGE_BOTH, &int_handler, (void*)gpio);
     if (status != MRAA_SUCCESS) {
         goto err_exit;
     }
 
-    /* wait 30 seconds isr trigger */
     while (1) {
         ;
     }
