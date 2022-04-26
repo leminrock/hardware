@@ -22,6 +22,7 @@ typedef struct _button {
     int counter;
     clock_t start_t;
     int pin;
+    int old_value;
 } t_button;
 
 void int_handler(void* args);
@@ -41,10 +42,15 @@ void int_handler(void* args)
     }
     */
     int value = mraa_gpio_read(x->gpio_1);
-    if (!value)
-        post("PRESSED");
-    else
-        post("\t\tRELEASED");
+
+    if (value != x->old_value) {
+        if (!value and x->old_value) {
+            post("PRESSED");
+        } else {
+            post("\t\tRELEASED");
+        }
+        x->old_value = value;
+    }
 }
 
 /* gestisce l'uscita */
@@ -106,6 +112,7 @@ void* button_new(t_floatarg f)
     x->counter = 0;
     x->start_t = clock();
     x->pin = (int)f;
+    x->old_value = 0;
     post("PIN NUMBER IS %d", x->pin);
     post("object correctly initialized...");
     post("cleck per secs %ld", CLOCKS_PER_SEC);
