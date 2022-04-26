@@ -41,10 +41,10 @@ void int_handler(void* args)
     }
     */
     int value = mraa_gpio_read(x->gpio_1);
-    if (value)
-        print("PRESSED");
+    if (!value)
+        post("PRESSED");
     else
-        print("RELEASED");
+        post("\t\tRELEASED");
 }
 
 /* gestisce l'uscita */
