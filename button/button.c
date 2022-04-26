@@ -13,13 +13,10 @@ clock_t start_timer;
 
 void int_handler(void* args)
 {
-    // fprintf(stdout, "ISR triggered\n\n");
-    // printf("RELEASED %d \n", counter);
-    // counter++;
-    // sleep(0.1);
-    mraa_gpio_context g = (mraa_gpio_context)args;
-    int value = mraa_gpio_read(g);
-    printf("value: %d", value);
+    mraa_gpio_context* g = (mraa_gpio_context)args;
+    int value = mraa_gpio_read(*g);
+    // printf("value: %d", value);
+    printf("touch");
 }
 
 int main()
