@@ -11,6 +11,7 @@
 #define GPIO_PIN_1 8
 
 static t_class* button_class;
+void int_handler(void *args);
 
 typedef struct _button {
     t_object x_obj;
@@ -41,6 +42,7 @@ void button_free(t_button* x)
 {
 
     /* release gpio's */
+    x->status = mraa_gpio_isr_exit(x->gpio_1);
     x->status = mraa_gpio_close(x->gpio_1);
 
     //! [Interesting]
