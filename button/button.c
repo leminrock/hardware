@@ -17,7 +17,7 @@ void int_handler(void* args)
     // printf("RELEASED %d \n", counter);
     // counter++;
     // sleep(0.1);
-    mraa_gpio_context g = (mraa_gpio_context*)args;
+    mraa_gpio_context g = (mraa_gpio_context)args;
     int value = mraa_gpio_read(g);
     printf("value: %d", value);
 }
