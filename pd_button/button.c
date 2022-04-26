@@ -24,6 +24,7 @@ typedef struct _button {
 
 void int_handler(void* args);
 
+// callback func
 void int_handler(void* args)
 {
     // fprintf(stdout, "ISR triggered\n\n");
