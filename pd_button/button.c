@@ -20,6 +20,7 @@ typedef struct _button {
     mraa_gpio_context gpio_1;
     int counter;
     clock_t start_t;
+    int pin;
 } t_button;
 
 void int_handler(void* args);
@@ -33,7 +34,7 @@ void int_handler(void* args)
     clock_t t = clock();
 
     if ((t - x->start_t) > 500) {
-    	x->counter++;
+        x->counter++;
         post("bang\tcounter: %d", x->counter);
         x->start_t = t;
     }
@@ -62,7 +63,7 @@ void button_free(t_button* x)
     mraa_deinit();
 }
 
-void* button_new(void)
+void* button_new(t_floatarg f)
 {
     t_button* x = (t_button*)pd_new(button_class);
     x->flag = 1;
@@ -98,6 +99,8 @@ void* button_new(void)
 
     x->counter = 0;
     x->start_t = clock();
+    x->pin = (int)f;
+    post("PIN NUMBER IS %d", x->pin);
     post("object correctly initialized...");
     post("cleck per secs %ld", CLOCKS_PER_SEC);
     return (void*)x;
@@ -106,6 +109,6 @@ void* button_new(void)
 void button_setup(void)
 {
     // button_class = class_new(gensym("button"), (t_newmethod)button_new, (t_method)button_free, sizeof(t_button), CLASS_DEFAULT, 0);
-    button_class = class_new(gensym("button"), (t_newmethod)button_new, (t_method)button_free, sizeof(t_button), 0, A_GIMME, 0);
+    button_class = class_new(gensym("button"), (t_newmethod)button_new, (t_method)button_free, sizeof(t_button), 0, A_DEFFLOAT, 0);
     // class_addbang(button_class, button_bang);
 }
