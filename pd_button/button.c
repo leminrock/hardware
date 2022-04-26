@@ -93,7 +93,7 @@ void* button_new(t_floatarg f)
         post("RIGHT DIRECTION");
 
     x->status
-        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, (t_button*)x);
+        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_FALLING, &int_handler, (t_button*)x);
     if (x->status != MRAA_SUCCESS)
         post("WRONG ISR BINDING");
 
