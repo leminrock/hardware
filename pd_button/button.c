@@ -29,12 +29,12 @@ void int_handler(void* args)
 {
     // fprintf(stdout, "ISR triggered\n\n");
     t_button* x = (t_button*)args;
-    x->counter++;
 
     clock_t t = clock();
 
     if ((t - x->start_t) > 500) {
-        post("bang %d, %ld", x->counter);
+    	x->counter++;
+        post("bang\tcounter: %d", x->counter);
         x->start_t = t;
     }
     // sleep(0.1);
