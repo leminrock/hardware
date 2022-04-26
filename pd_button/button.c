@@ -44,7 +44,7 @@ void int_handler(void* args)
     int value = mraa_gpio_read(x->gpio_1);
 
     if (value != x->old_value) {
-        if (!value and x->old_value) {
+        if (!value && x->old_value) {
             post("PRESSED");
         } else {
             post("\t\tRELEASED");
@@ -112,7 +112,7 @@ void* button_new(t_floatarg f)
     x->counter = 0;
     x->start_t = clock();
     x->pin = (int)f;
-    x->old_value = 0;
+    x->old_value = -1;
     post("PIN NUMBER IS %d", x->pin);
     post("object correctly initialized...");
     post("cleck per secs %ld", CLOCKS_PER_SEC);
