@@ -11,7 +11,7 @@
 #define GPIO_PIN_1 8
 
 static t_class* button_class;
-void int_handler(void *args);
+void int_handler(void* args);
 
 typedef struct _button {
     t_object x_obj;
@@ -83,7 +83,9 @@ void* button_new(void)
 
     /* set GPIO to output */
     x->status = mraa_gpio_dir(x->gpio_1, MRAA_GPIO_IN);
-    mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, NULL);
+    x->status = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, NULL);
+    if (x->status != MRAA_SUCCESS)
+        post("WRONG ISR BINDING");
 
     /*
      while (flag) {
