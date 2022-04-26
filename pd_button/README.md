@@ -1,0 +1,5 @@
+# compiling
+
+```bash
+make
+```
