@@ -30,7 +30,7 @@ void int_handler(void* args)
     t_button* x = (t_button*)args;
     x->counter++;
 
-    post("bang %d", x->counter);
+    post("bang %d, %ld", x->counter, (long)clock());
     // sleep(0.1);
 }
 
