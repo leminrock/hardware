@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <unistd.h>
 
 /* mraa header */
@@ -18,6 +19,7 @@ typedef struct _button {
     mraa_result_t status;
     mraa_gpio_context gpio_1;
     int counter;
+    clock_t start_t;
 } t_button;
 
 void int_handler(void* args);
@@ -89,7 +91,9 @@ void* button_new(void)
         post("WRONG ISR BINDING");
 
     x->counter = 0;
+    x->start_t = clock();
     post("object correctly initialized...");
+    post("cleck per secs %ld", CLOCKS_PER_SEC);
     return (void*)x;
 }
 
