@@ -14,6 +14,8 @@ void int_handler(void* args)
     //fprintf(stdout, "ISR triggered\n\n");
     printf("RELEASED %d \n", counter);
     counter++;
+    sleep(2);
+    printf("passato");
 }
 
 int main()
