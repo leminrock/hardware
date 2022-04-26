@@ -35,7 +35,7 @@ void int_handler(void* args)
 
     if ((t - x->start_t) > DEBOUNCE) {
         x->counter++;
-        post("bang\tcounter: %d,\tpin_number: %d", x->counter, x->pin);
+        post("pin value: %d,\tcounter: %d,\tpin_number: %d", mraa_gpio_read(x->gpio_1), x->counter, x->pin);
         x->start_t = t;
     }
     // sleep(0.1);
