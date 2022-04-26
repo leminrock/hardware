@@ -32,23 +32,17 @@ void int_handler(void* args)
 {
     t_button* x = (t_button*)args;
 
-    /*
-    clock_t t = clock();
-
-    if ((t - x->start_t) > DEBOUNCE) {
-        x->counter++;
-        post("pin value: %d,\tcounter: %d,\tpin_number: %d", mraa_gpio_read(x->gpio_1), x->counter, x->pin);
-        x->start_t = t;
-    }
-    */
     int value = mraa_gpio_read(x->gpio_1);
 
     if (value != x->old_value) {
         if (!value and x->old_value) {
-            post("PRESSED");
-        } else {
+            post("PRESSED %d TIMES", ++x->counter);
+        }
+        /*
+        else {
             post("\t\tRELEASED");
         }
+        */
         x->old_value = value;
     }
 }
