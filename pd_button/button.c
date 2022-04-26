@@ -8,7 +8,7 @@
 #include "mraa/gpio.h"
 
 /* gpio declaration */
-#define GPIO_PIN_1 22
+#define GPIO_PIN_1 8
 
 static t_class* button_class;
 
