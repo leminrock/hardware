@@ -35,7 +35,7 @@ void int_handler(void* args)
     int value = mraa_gpio_read(x->gpio_1);
 
     if (value != x->old_value) {
-        if (!value and x->old_value) {
+        if (!value && x->old_value) {
             post("PRESSED %d TIMES", ++x->counter);
         }
         /*
