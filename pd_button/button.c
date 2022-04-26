@@ -109,6 +109,6 @@ void* button_new(t_floatarg f)
 void button_setup(void)
 {
     // button_class = class_new(gensym("button"), (t_newmethod)button_new, (t_method)button_free, sizeof(t_button), CLASS_DEFAULT, 0);
-    button_class = class_new(gensym("button"), (t_newmethod)button_new, (t_method)button_free, sizeof(t_button), 0, A_DEFFLOAT, 0);
+    button_class = class_new(gensym("button"), (t_newmethod)button_new, (t_method)button_free, sizeof(t_button), CLASS_DEFAULT, A_DEFFLOAT, 0);
     // class_addbang(button_class, button_bang);
 }
