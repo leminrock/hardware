@@ -91,6 +91,7 @@ void* button_new(void)
          usleep(50000);
      }*/
 
+    post("object correctly initialized...");
     return (void*)x;
 }
 
