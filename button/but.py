@@ -22,7 +22,7 @@ def isr_routine(gpio):
 
 
 # GPIO
-pin = 42
+pin = 8
 
 try:
     # initialise GPIO
