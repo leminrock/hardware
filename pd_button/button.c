@@ -10,6 +10,7 @@
 
 /* gpio declaration */
 #define GPIO_PIN_1 8
+#define DEBOUNCE 4000
 
 static t_class* button_class;
 
@@ -28,14 +29,13 @@ void int_handler(void* args);
 // callback func
 void int_handler(void* args)
 {
-    // fprintf(stdout, "ISR triggered\n\n");
     t_button* x = (t_button*)args;
 
     clock_t t = clock();
 
-    if ((t - x->start_t) > 500) {
+    if ((t - x->start_t) > DEBOUNCE) {
         x->counter++;
-        post("bang\tcounter: %d", x->counter);
+        post("bang\tcounter: %d,\tpin_number: %d", x->counter, x->pin);
         x->start_t = t;
     }
     // sleep(0.1);
@@ -78,7 +78,7 @@ void* button_new(t_floatarg f)
 
     //! [Interesting]
     /* initialize GPIO pin */
-    x->gpio_1 = mraa_gpio_init(int(f));
+    x->gpio_1 = mraa_gpio_init((int)f);
 
     if (x->gpio_1 == NULL) {
         post("Failed to initialize GPIO %d", (int)f);
