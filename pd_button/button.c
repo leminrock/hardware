@@ -19,12 +19,16 @@ typedef struct _button {
     t_int state;
     mraa_result_t status;
     mraa_gpio_context gpio_1;
+    int counter;
 } t_button;
 
 void int_handler(void* args)
 {
     // fprintf(stdout, "ISR triggered\n\n");
-    post("bang");
+    t_button *x = (t_button *)args;
+    x->counter++;
+
+    post("bang %d", x->counter);
     // sleep(0.1);
 }
 
@@ -94,18 +98,11 @@ void* button_new(void)
         post("RIGHT DIRECTION");
 
     x->status
-        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, NULL);
+        = mraa_gpio_isr(x->gpio_1, MRAA_GPIO_EDGE_RISING, &int_handler, (void *)x);
     if (x->status != MRAA_SUCCESS)
         post("WRONG ISR BINDING");
 
-    /*
-     while (flag) {
-         state = 1 - state;
-
-
-         usleep(50000);
-     }*/
-
+    x->counter = 0;
     post("object correctly initialized...");
     return (void*)x;
 }
